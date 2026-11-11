@@ -1,218 +1,112 @@
-let stockChart = null;
 
+let stockChart = null;
 
 // ==============================
 // GO TO PREDICTION
 // ==============================
 
 function goToPrediction() {
-
     document.getElementById("prediction").scrollIntoView({
         behavior: "smooth"
     });
-
 }
 
 
 // ==============================
-// GENERATE PREDICTION
+// GENERATE STOCK PREDICTION
 // ==============================
 
 async function generatePrediction() {
 
-    const stock =
-        document.getElementById("stock").value;
-
-    const model =
-        document.getElementById("model").value;
-
+    const stock = document.getElementById("stock").value;
+    const model = document.getElementById("model").value;
 
     try {
-
         const response = await fetch(
             `/predict?stock=${encodeURIComponent(stock)}&model=${encodeURIComponent(model)}`
         );
 
-
         const data = await response.json();
 
-
-        if (data.error) {
-
-            alert(data.error);
-
-            return;
-
+        if (!response.ok || data.error) {
+            throw new Error(data.error || "Prediction failed");
         }
 
-
-        // ==============================
-        // PREDICTION INFORMATION
-        // ==============================
-
-        document.getElementById("result-stock").textContent =
-            data.stock;
-
-
-        document.getElementById("result-model").textContent =
-            data.model;
-
+        document.getElementById("result-stock").textContent = stock;
+        document.getElementById("result-model").textContent = model;
 
         document.getElementById("latest-price").textContent =
-            "₹" + data.latest_price;
-
+            Number(data.latest_price).toFixed(2);
 
         document.getElementById("predicted-price").textContent =
-            "₹" + data.predicted_price;
-
+            Number(data.predicted_price).toFixed(2);
 
         document.getElementById("prediction-direction").textContent =
             data.direction;
 
-
-        // ==============================
-        // MODEL PERFORMANCE
-        // ==============================
-
         document.getElementById("mae").textContent =
-            data.mae;
-
+            Number(data.mae).toFixed(2);
 
         document.getElementById("rmse").textContent =
-            data.rmse;
-
+            Number(data.rmse).toFixed(2);
 
         document.getElementById("r2").textContent =
-            data.r2;
+            Number(data.r2).toFixed(4);
 
+        document.getElementById("result").style.display = "block";
 
-        // ==============================
-        // SHOW RESULT
-        // ==============================
+        // Stock chart
+        const chartArea = document.getElementById("stockChart");
 
-        document.getElementById("result").style.display =
-            "block";
-
-
-        // ==============================
-        // HISTORICAL CHART
-        // ==============================
-
-        const chartArea =
-            document.getElementById("stockChart");
-
-
-        // Remove old chart
-
-        if (stockChart !== null) {
-
+        if (stockChart) {
             stockChart.destroy();
-
         }
 
-
-        // Create new chart
-
         stockChart = new Chart(chartArea, {
-
             type: "line",
 
             data: {
-
                 labels: data.dates,
 
                 datasets: [{
-
-                    label:
-                        data.stock + " Closing Price",
-
-                    data:
-                        data.prices,
-
+                    label: stock + " Historical Price",
+                    data: data.prices,
                     borderWidth: 2,
-
-                    fill: false,
-
-                    tension: 0.3
-
+                    tension: 0.3,
+                    fill: false
                 }]
-
             },
 
-
             options: {
-
                 responsive: true,
 
-                maintainAspectRatio: false,
-
                 plugins: {
-
                     legend: {
-
                         display: true
-
                     }
-
                 },
 
-
                 scales: {
-
-                    x: {
-
-                        title: {
-
-                            display: true,
-
-                            text: "Date"
-
-                        }
-
-                    },
-
-
                     y: {
-
-                        title: {
-
-                            display: true,
-
-                            text: "Price (₹)"
-
-                        }
-
+                        beginAtZero: false
                     }
-
                 }
-
             }
-
         });
 
-    }
-
-
-    catch (error) {
-
+    } catch (error) {
+        alert("Error: " + error.message);
         console.error(error);
-
-        alert(
-            "Unable to connect to the prediction server."
-        );
-
     }
-
 }
 
 
-
 // ==============================
-// COMPARE MODELS
+// COMPARE ALL ML MODELS
 // ==============================
-
 
 async function compareModels() {
+
     const stock = document.getElementById("stock").value;
 
     try {
@@ -223,11 +117,10 @@ async function compareModels() {
         const data = await response.json();
 
         if (!response.ok || data.error) {
-            alert(data.error || "Unable to compare models.");
-            return;
+            throw new Error(data.error || "Model comparison failed");
         }
 
-        const modelRows = {
+        const modelIDs = {
             "Linear Regression": "linear",
             "Random Forest": "rf",
             "Gradient Boosting": "gb",
@@ -238,78 +131,28 @@ async function compareModels() {
             "KNN": "knn"
         };
 
-        for (const [modelName, prefix] of Object.entries(modelRows)) {
+        for (const [modelName, prefix] of Object.entries(modelIDs)) {
+
             const result = data.models[modelName];
 
             if (!result) continue;
 
-            const mae = document.getElementById(`${prefix}-mae`);
-            const rmse = document.getElementById(`${prefix}-rmse`);
-            const r2 = document.getElementById(`${prefix}-r2`);
+            document.getElementById(`${prefix}-mae`).textContent =
+                Number(result.mae).toFixed(2);
 
-            if (mae) mae.textContent = result.mae;
-            if (rmse) rmse.textContent = result.rmse;
-            if (r2) r2.textContent = result.r2;
+            document.getElementById(`${prefix}-rmse`).textContent =
+                Number(result.rmse).toFixed(2);
+
+            document.getElementById(`${prefix}-r2`).textContent =
+                Number(result.r2).toFixed(4);
         }
+
+        document.getElementById("comparison").scrollIntoView({
+            behavior: "smooth"
+        });
+
     } catch (error) {
-        console.error("Comparison error:", error);
-        alert("Unable to compare models.");
+        alert("Error: " + error.message);
+        console.error(error);
     }
-}
-
-
-        // ==============================
-        // LINEAR REGRESSION
-        // ==============================
-
-        document.getElementById("linear-mae").textContent =
-            data.linear_regression.mae;
-
-
-        document.getElementById("linear-rmse").textContent =
-            data.linear_regression.rmse;
-
-
-        document.getElementById("linear-r2").textContent =
-            data.linear_regression.r2;
-
-
-
-        // ==============================
-        // RANDOM FOREST
-        // ==============================
-
-        document.getElementById("rf-mae").textContent =
-            data.random_forest.mae;
-
-
-        document.getElementById("rf-rmse").textContent =
-            data.random_forest.rmse;
-
-
-        document.getElementById("rf-r2").textContent =
-            data.random_forest.r2;
-
-
-        // Success message
-
-        
-
-    }
-
-
-    catch (error) {
-
-        console.error(
-            "Compare error:",
-            error
-        );
-
-
-        alert(
-            "Unable to compare the models."
-        );
-
-    }
-
 }
