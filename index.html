@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>StockAI - Stock Prediction</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">Stock<span>AI</span></div>
+
+        <div class="menu">
+            <a href="#">Home</a>
+            <a href="#">Prediction</a>
+            <a href="#">Models</a>
+            <a href="#">About</a>
+        </div>
+    </nav>
+
+
+    <section class="hero">
+
+        <div class="hero-text">
+
+            <p class="tag">AI + MACHINE LEARNING</p>
+
+            <h1>
+                Stock Price<br>
+                <span>Prediction</span>
+            </h1>
+
+            <p class="description">
+                Analyze historical stock data and predict future
+                stock prices using Machine Learning.
+            </p>
+
+            <button onclick="goToPrediction()">Start Prediction →</button>
+
+        </div>
+
+
+        <div class="stock-card">
+
+            <div class="card-top">
+                <strong>TCS</strong>
+                <span>+2.41%</span>
+            </div>
+
+            <p class="price">₹3,421.50</p>
+
+            <div class="chart">
+                <div class="chart-line"></div>
+            </div>
+
+            <div class="card-bottom">
+                <span>Historical Trend</span>
+                <span>LIVE DEMO</span>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="features">
+
+        <h2>Machine Learning Based Prediction</h2>
+
+        <p class="section-text">
+            Our system uses historical stock data and machine
+            learning algorithms to generate predictions.
+        </p>
+
+
+        <div class="cards">
+
+            <div class="feature-card">
+                <div class="number">01</div>
+                <h3>Data Collection</h3>
+                <p>
+                    Collect historical stock market data
+                    for analysis.
+                </p>
+            </div>
+
+
+            <div class="feature-card">
+                <div class="number">02</div>
+                <h3>Machine Learning</h3>
+                <p>
+                    Train ML models using historical
+                    stock information.
+                </p>
+            </div>
+
+
+            <div class="feature-card">
+                <div class="number">03</div>
+                <h3>Prediction</h3>
+                <p>
+                    Predict the future stock price
+                    using the trained model.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <footer>
+
+    <h2>StockAI</h2>
+
+    <p>
+        AIML Mini Project | Third Year IT
+    </p>
+
+</footer>
+
+<script src="script.js"></script>
+<section id="prediction">
+
+    <h2>Stock Prediction</h2>
+
+    <p>Select a stock and generate a prediction.</p>
+
+    <label>Select Stock</label>
+
+    <select id="stock">
+        <option>TCS</option>
+        <option>Reliance Industries</option>
+        <option>Infosys</option>
+        <option>HDFC Bank</option>
+    </select>
+
+    <br><br>
+
+    <label>Select Model</label>
+
+    <select id="model">
+        <option>Random Forest</option>
+        <option>Linear Regression</option>
+    </select>
+
+    <br><br>
+
+    <button onclick="generatePrediction()">
+        Generate Prediction
+    </button>
+<div id="result" style="display: none; margin-top: 30px;">
+
+    <h3>Prediction Result</h3>
+
+    <p>Selected Stock: <strong id="result-stock"></strong></p>
+
+    <p>Selected Model: <strong id="result-model"></strong></p>
+
+    <p>Predicted Price: <strong id="predicted-price">₹0</strong></p>
+
+    <p>Prediction: <strong id="prediction-direction">--</strong></p>
+
+</div>
+</section>
+</body>
+</html>
