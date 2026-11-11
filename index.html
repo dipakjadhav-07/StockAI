@@ -1,172 +1,179 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>StockAI - Stock Prediction</title>
-
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
 
-    <nav>
-        <div class="logo">Stock<span>AI</span></div>
+<nav>
+    <div class="logo">Stock<span>AI</span></div>
+    <div class="menu">
+        <a href="#home">Home</a>
+        <a href="#prediction">Prediction</a>
+        <a href="#comparison">Models</a>
+        <a href="#about">About</a>
+    </div>
+</nav>
 
-        <div class="menu">
-            <a href="#">Home</a>
-            <a href="#">Prediction</a>
-            <a href="#">Models</a>
-            <a href="#">About</a>
-        </div>
-    </nav>
-
-
-    <section class="hero">
-
-        <div class="hero-text">
-
-            <p class="tag">AI + MACHINE LEARNING</p>
-
-            <h1>
-                Stock Price<br>
-                <span>Prediction</span>
-            </h1>
-
-            <p class="description">
-                Analyze historical stock data and predict future
-                stock prices using Machine Learning.
-            </p>
-
-            <button onclick="goToPrediction()">Start Prediction →</button>
-
-        </div>
-
-
-        <div class="stock-card">
-
-            <div class="card-top">
-                <strong>TCS</strong>
-                <span>+2.41%</span>
-            </div>
-
-            <p class="price">₹3,421.50</p>
-
-            <div class="chart">
-                <div class="chart-line"></div>
-            </div>
-
-            <div class="card-bottom">
-                <span>Historical Trend</span>
-                <span>LIVE DEMO</span>
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <section class="features">
-
-        <h2>Machine Learning Based Prediction</h2>
-
-        <p class="section-text">
-            Our system uses historical stock data and machine
-            learning algorithms to generate predictions.
+<section class="hero" id="home">
+    <div class="hero-text">
+        <p class="tag">AI + MACHINE LEARNING</p>
+        <h1>Stock Price<br><span>Prediction</span></h1>
+        <p class="description">
+            Analyze historical stock data and predict stock prices
+            using Machine Learning algorithms.
         </p>
+        <button onclick="goToPrediction()">Start Prediction →</button>
+    </div>
 
-
-        <div class="cards">
-
-            <div class="feature-card">
-                <div class="number">01</div>
-                <h3>Data Collection</h3>
-                <p>
-                    Collect historical stock market data
-                    for analysis.
-                </p>
-            </div>
-
-
-            <div class="feature-card">
-                <div class="number">02</div>
-                <h3>Machine Learning</h3>
-                <p>
-                    Train ML models using historical
-                    stock information.
-                </p>
-            </div>
-
-
-            <div class="feature-card">
-                <div class="number">03</div>
-                <h3>Prediction</h3>
-                <p>
-                    Predict the future stock price
-                    using the trained model.
-                </p>
-            </div>
-
+    <div class="stock-card">
+        <div class="card-top">
+            <strong>StockAI</strong>
+            <span>ML POWERED</span>
         </div>
+        <p class="price">AI Prediction</p>
+        <div class="chart">
+            <div class="chart-line"></div>
+        </div>
+        <div class="card-bottom">
+            <span>Historical Analysis</span>
+            <span>DEMO</span>
+        </div>
+    </div>
+</section>
 
-    </section>
-
-
-    <footer>
-
-    <h2>StockAI</h2>
-
-    <p>
-        AIML Mini Project | Third Year IT
+<section class="features">
+    <h2>Machine Learning Based Prediction</h2>
+    <p class="section-text">
+        Analyze historical stock data using multiple ML algorithms.
     </p>
 
-</footer>
+    <div class="cards">
+        <div class="feature-card">
+            <div class="number">01</div>
+            <h3>Data Collection</h3>
+            <p>Collect historical stock market data using Yahoo Finance.</p>
+        </div>
+        <div class="feature-card">
+            <div class="number">02</div>
+            <h3>Machine Learning</h3>
+            <p>Train and evaluate different machine learning models.</p>
+        </div>
+        <div class="feature-card">
+            <div class="number">03</div>
+            <h3>Prediction</h3>
+            <p>Estimate the next stock price using historical data.</p>
+        </div>
+    </div>
+</section>
 
-<script src="script.js"></script>
 <section id="prediction">
-
     <h2>Stock Prediction</h2>
+    <p>Select a stock and machine learning model.</p>
 
-    <p>Select a stock and generate a prediction.</p>
-
-    <label>Select Stock</label>
-
+    <label for="stock">Select Stock</label>
     <select id="stock">
         <option>TCS</option>
         <option>Reliance Industries</option>
         <option>Infosys</option>
         <option>HDFC Bank</option>
+        <option>ICICI Bank</option>
+        <option>State Bank of India</option>
+        <option>ITC</option>
+        <option>Wipro</option>
     </select>
 
-    <br><br>
-
-    <label>Select Model</label>
-
+    <label for="model">Select Model</label>
     <select id="model">
-        <option>Random Forest</option>
         <option>Linear Regression</option>
+        <option>Random Forest</option>
+        <option>Gradient Boosting</option>
+        <option>Decision Tree</option>
+        <option>Extra Trees</option>
+        <option>AdaBoost</option>
+        <option>Support Vector Regression</option>
+        <option>KNN</option>
     </select>
 
-    <br><br>
+    <br>
+    <button onclick="generatePrediction()">Generate Prediction</button>
 
-    <button onclick="generatePrediction()">
-        Generate Prediction
-    </button>
-<div id="result" style="display: none; margin-top: 30px;">
+    <div id="result" style="display:none; margin-top:30px;">
+        <h3>Prediction Result</h3>
+        <p>Stock: <strong id="result-stock"></strong></p>
+        <p>Model: <strong id="result-model"></strong></p>
+        <p>Latest Price: ₹<strong id="latest-price"></strong></p>
+        <p>Predicted Price: ₹<strong id="predicted-price"></strong></p>
+        <p>Direction: <strong id="prediction-direction"></strong></p>
 
-    <h3>Prediction Result</h3>
+        <h3>Model Performance</h3>
+        <p>MAE: <strong id="mae"></strong></p>
+        <p>RMSE: <strong id="rmse"></strong></p>
+        <p>R² Score: <strong id="r2"></strong></p>
 
-    <p>Selected Stock: <strong id="result-stock"></strong></p>
-
-    <p>Selected Model: <strong id="result-model"></strong></p>
-
-    <p>Predicted Price: <strong id="predicted-price">₹0</strong></p>
-
-    <p>Prediction: <strong id="prediction-direction">--</strong></p>
-
-</div>
+        <div style="height:350px; max-width:1000px; margin:30px auto;">
+            <canvas id="stockChart"></canvas>
+        </div>
+    </div>
 </section>
+
+<section id="comparison" class="features">
+    <h2>Model Comparison</h2>
+    <p class="section-text">
+        Compare the performance of all eight machine learning models.
+    </p>
+
+    <button onclick="compareModels()">Compare All Models</button>
+
+    <div style="overflow-x:auto; margin-top:30px;">
+        <table style="width:100%; border-collapse:collapse; background:white;">
+            <thead>
+                <tr>
+                    <th>Model</th>
+                    <th>MAE</th>
+                    <th>RMSE</th>
+                    <th>R² Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Linear Regression</td><td id="linear-mae">-</td><td id="linear-rmse">-</td><td id="linear-r2">-</td></tr>
+                <tr><td>Random Forest</td><td id="rf-mae">-</td><td id="rf-rmse">-</td><td id="rf-r2">-</td></tr>
+                <tr><td>Gradient Boosting</td><td id="gb-mae">-</td><td id="gb-rmse">-</td><td id="gb-r2">-</td></tr>
+                <tr><td>Decision Tree</td><td id="dt-mae">-</td><td id="dt-rmse">-</td><td id="dt-r2">-</td></tr>
+                <tr><td>Extra Trees</td><td id="et-mae">-</td><td id="et-rmse">-</td><td id="et-r2">-</td></tr>
+                <tr><td>AdaBoost</td><td id="ada-mae">-</td><td id="ada-rmse">-</td><td id="ada-r2">-</td></tr>
+                <tr><td>SVR</td><td id="svr-mae">-</td><td id="svr-rmse">-</td><td id="svr-r2">-</td></tr>
+                <tr><td>KNN</td><td id="knn-mae">-</td><td id="knn-rmse">-</td><td id="knn-r2">-</td></tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section id="about" class="features">
+    <h2>About StockAI</h2>
+    <p class="section-text">
+        StockAI is an academic AIML mini project developed by
+        Third Year Information Technology students.
+        It demonstrates historical stock data analysis and
+        experimental machine learning predictions.
+    </p>
+    <p class="warning">
+        Predictions are experimental and should not be used
+        as financial or investment advice.
+    </p>
+</section>
+
+<footer>
+    <h2>StockAI</h2>
+    <p>AIML Mini Project | Third Year IT</p>
+</footer>
+
+<script src="/script.js"></script>
 </body>
 </html>
